@@ -11,9 +11,6 @@
     <remote name="github"
             fetch="https://github.com"/>
 
-    <!-- TWRP lives in TeamWin android-11 (not AOSP!) -->
-    <project path="bootable/recovery" name="android_bootable_recovery" remote="TeamWin" revision="android-11"/>
-    
     <project path="build/soong" name="android_build_soong" remote="TeamWin" revision="android-11">
         <linkfile src="root.bp" dest="Android.bp"/>
         <linkfile src="bootstrap.bash" dest="bootstrap.bash"/>
