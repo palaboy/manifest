@@ -11,6 +11,19 @@
     <remote name="github"
             fetch="https://github.com"/>
 
+    <!-- TWRP lives in TeamWin android-11 (not AOSP!) -->
+    <project path="bootable/recovery" name="android_bootable_recovery" remote="TeamWin" revision="android-11"/>
+
+    <project path="build/make" name="android_build" remote="TeamWin" revision="android-11" groups="pdk">
+        <copyfile src="core/root.mk" dest="Makefile"/>
+        <linkfile src="CleanSpec.mk" dest="build/CleanSpec.mk"/>
+        <linkfile src="buildspec.mk.default" dest="build/buildspec.mk.default"/>
+        <linkfile src="core" dest="build/core"/>
+        <linkfile src="envsetup.sh" dest="build/envsetup.sh"/>
+        <linkfile src="target" dest="build/target"/>
+        <linkfile src="tools" dest="build/tools"/>
+    </project>
+
     <project path="build/soong" name="android_build_soong" remote="TeamWin" revision="android-11">
         <linkfile src="root.bp" dest="Android.bp"/>
         <linkfile src="bootstrap.bash" dest="bootstrap.bash"/>
@@ -36,6 +49,8 @@
     <!-- Include ntfs_3g for NTFS support -->
     <project path="external/ntfs-3g" name="android_external_ntfs-3g" remote="LineageOS" revision="lineage-18.1"/>
 
+    <project path="external/python3" name="android_external_python3" remote="TeamWin" revision="android-11"/>
+
     <project path="hardware/interfaces" name="android_hardware_interfaces" remote="TeamWin" revision="android-11"/>
 
     <project path="system/core" name="android_system_core" remote="TeamWin" revision="android-11"/>
@@ -50,7 +65,15 @@
     <!-- Include lineage-tools for lzma support -->
     <project path="prebuilts/tools-lineage" name="android_prebuilts_tools-lineage" remote="LineageOS"
              revision="lineage-18.1"/>
-
+    
+    <!-- Use TeamWin repos for full recovery compatibility -->
+    <project path="vendor/twrp" name="android_vendor_twrp" remote="TeamWin" revision="android-11" >
+       <copyfile src="dummy/Android.mk" dest="frameworks/base/core/xsd/vts/Android.mk" />
+       <copyfile src="dummy/Android.mk" dest="frameworks/base/services/core/xsd/vts/Android.mk" />
+       <copyfile src="dummy/Android.mk" dest="system/libvintf/xsd/compatibilityMatrix/vts/Android.mk" />
+       <copyfile src="dummy/Android.mk" dest="system/libvintf/xsd/halManifest/vts/Android.mk" />
+    </project>
+    
     <!-- Common Qualcomm Repos -->
     <project name="android_device_qcom_common" path="device/qcom/common" remote="TeamWin" revision="android-11" />
     <project name="android_device_qcom_twrp-common" path="device/qcom/twrp-common" remote="TeamWin" revision="android-11" />
